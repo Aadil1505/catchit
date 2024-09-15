@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class JoinEventScreen extends StatelessWidget {
-  const JoinEventScreen({Key? key}) : super(key: key);
+  const JoinEventScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,13 @@ class JoinEventScreen extends StatelessWidget {
         title: const Text('Join Event'),
         backgroundColor: ShadTheme.of(context).colorScheme.background,
       ),
-      body: Center(
+      body: 
+        Dismissible(
+          key: const Key('create_page'),
+          direction: DismissDirection.horizontal,
+          onDismissed: (_) => context.go('/home'),
+          child: 
+      Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -22,7 +29,7 @@ class JoinEventScreen extends StatelessWidget {
                 style: ShadTheme.of(context).textTheme.h3,
               ),
               const SizedBox(height: 16),
-              ShadInput(
+              const ShadInput(
                 placeholder: Text('Event Code'),
               ),
               const SizedBox(height: 16),
@@ -36,6 +43,7 @@ class JoinEventScreen extends StatelessWidget {
           ),
         ),
       ),
+      )
     );
   }
 }

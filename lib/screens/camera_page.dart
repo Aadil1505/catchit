@@ -16,8 +16,7 @@ class CameraPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
+      body: 
           Dismissible(
             key: const Key('camera_page'),
             direction: DismissDirection.horizontal,
@@ -164,8 +163,6 @@ class CameraPage extends StatelessWidget {
           //     ),
           //   ),
           // ),
-        ],
-      ),
     );
   }
 }

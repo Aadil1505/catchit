@@ -1,0 +1,171 @@
+import 'dart:io';
+
+// import 'package:better_open_file/better_open_file.dart';
+import 'package:camerawesome/camerawesome_plugin.dart';
+import 'package:camerawesome/pigeon.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+import '../utils/file_utils.dart';
+
+
+class CameraPage extends StatelessWidget {
+  const CameraPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Dismissible(
+            key: const Key('camera_page'),
+            direction: DismissDirection.horizontal,
+            onDismissed: (_) => context.go('/camera'),
+            child: CameraAwesomeBuilder.awesome(
+              previewPadding: const EdgeInsets.only(left: 150, top: 100),
+              theme: AwesomeTheme(
+                bottomActionsBackgroundColor: Colors.transparent,
+                buttonTheme: AwesomeButtonTheme(
+                  iconSize: 20,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.all(16),
+                  buttonBuilder: (child, onTap) {
+                    return ClipOval(
+                      child: Material(
+                        color: Colors.transparent,
+                        shape: const CircleBorder(),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.black,
+                          onTap: onTap,
+                          child: child,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              topActionsBuilder: (state) {
+                return AwesomeTopActions(
+                  state: state,
+                );
+              },
+              onMediaCaptureEvent: (event) {
+                switch ((event.status, event.isPicture, event.isVideo)) {
+                  case (MediaCaptureStatus.capturing, true, false):
+                    debugPrint('Capturing picture...');
+                  case (MediaCaptureStatus.success, true, false):
+                    event.captureRequest.when(
+                      single: (single) {
+                        debugPrint('Picture saved: ${single.file?.path}');
+                      },
+                      multiple: (multiple) {
+                        multiple.fileBySensor.forEach((key, value) {
+                          debugPrint('multiple image taken: $key ${value?.path}');
+                        });
+                      },
+                    );
+                  case (MediaCaptureStatus.failure, true, false):
+                    debugPrint('Failed to capture picture: ${event.exception}');
+                  case (MediaCaptureStatus.capturing, false, true):
+                    debugPrint('Capturing video...');
+                  case (MediaCaptureStatus.success, false, true):
+                    event.captureRequest.when(
+                      single: (single) {
+                        debugPrint('Video saved: ${single.file?.path}');
+                      },
+                      multiple: (multiple) {
+                        multiple.fileBySensor.forEach((key, value) {
+                          debugPrint('multiple video taken: $key ${value?.path}');
+                        });
+                      },
+                    );
+                  case (MediaCaptureStatus.failure, false, true):
+                    debugPrint('Failed to capture video: ${event.exception}');
+                  default:
+                    debugPrint('Unknown event: $event');
+                }
+              },
+              saveConfig: SaveConfig.photoAndVideo(
+                initialCaptureMode: CaptureMode.photo,
+                photoPathBuilder: (sensors) async {
+                  final Directory extDir = await getTemporaryDirectory();
+                  final testDir = await Directory(
+                    '${extDir.path}/camerawesome',
+                  ).create(recursive: true);
+                  if (sensors.length == 1) {
+                    final String filePath =
+                        '${testDir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+                    return SingleCaptureRequest(filePath, sensors.first);
+                  }
+                  // Separate pictures taken with front and back camera
+                  return MultipleCaptureRequest(
+                    {
+                      for (final sensor in sensors)
+                        sensor:
+                            '${testDir.path}/${sensor.position == SensorPosition.front ? 'front_' : "back_"}${DateTime.now().millisecondsSinceEpoch}.jpg',
+                    },
+                  );
+                },
+                videoOptions: VideoOptions(
+                  enableAudio: true,
+                  ios: CupertinoVideoOptions(
+                    fps: 60,
+                  ),
+                  android: AndroidVideoOptions(
+                    bitrate: 6000000,
+                    fallbackStrategy: QualityFallbackStrategy.lower,
+                  ),
+                ),
+                // exifPreferences: ExifPreferences(saveGPSLocation: true),
+              ),
+              sensorConfig: SensorConfig.single(
+                sensor: Sensor.position(SensorPosition.back),
+                flashMode: FlashMode.auto,
+                aspectRatio: CameraAspectRatios.ratio_4_3,
+                zoom: 0.0,
+              ),
+              enablePhysicalButton: true,
+              // filter: AwesomeFilter.AddictiveRed,
+              previewAlignment: Alignment.center,
+              previewFit: CameraPreviewFit.fitHeight,
+              onMediaTap: (mediaCapture) {
+                mediaCapture.captureRequest.when(
+                  single: (single) {
+                    debugPrint('single: ${single.file?.path}');
+                    single.file?.open();
+                  },
+                  multiple: (multiple) {
+                    multiple.fileBySensor.forEach((key, value) {
+                      debugPrint('multiple file taken: $key ${value?.path}');
+                      value?.open();
+                    });
+                  },
+                );
+              },
+              availableFilters: awesomePresetFiltersList,
+            ),
+          ),
+          // Positioned(
+          //   top: MediaQuery.of(context).padding.top + 10,
+          //   left: 0,
+          //   right: 0,
+          //   child: Center(
+          //     child: Text(
+          //       'Swipe down to close',
+          //       style: TextStyle(color: Colors.white, shadows: [
+          //         Shadow(
+          //           offset: Offset(1.0, 1.0),
+          //           blurRadius: 3.0,
+          //           color: Colors.black.withOpacity(0.8),
+          //         ),
+          //       ]),
+          //     ),
+          //   ),
+          // ),
+        ],
+      ),
+    );
+  }
+}

@@ -9,13 +9,7 @@ class CreateEventScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Create Event')),
       body:
-        Dismissible(
-          key: const Key('create_page'),
-          direction: DismissDirection.horizontal,
-          onDismissed: (_) => context.go('/home'),
-          child: 
-            const Center(child: Text('Create Event Screen')),
-        )
+        const Center(child: Text('Create Event Screen')),
     );
   }
 }

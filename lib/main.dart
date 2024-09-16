@@ -107,20 +107,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ShadApp.router(
+    return ShadApp.materialRouter(
       debugShowCheckedModeBanner: false,
       darkTheme: ShadThemeData(
         brightness: Brightness.dark,
         colorScheme: const ShadSlateColorScheme.dark(),
       ),
-      // theme: ThemeData(
-      //   pageTransitionsTheme: PageTransitionsTheme(
-      //     builders: {
-      //       TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-      //       TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-      //     }
-      //   )
-      // ),
       routerConfig: _router,
     );
   }

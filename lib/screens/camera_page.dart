@@ -17,11 +17,8 @@ class CameraPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: 
-          Dismissible(
-            key: const Key('camera_page'),
-            direction: DismissDirection.horizontal,
-            onDismissed: (_) => context.go('/camera'),
-            child: CameraAwesomeBuilder.awesome(
+
+            CameraAwesomeBuilder.awesome(
               previewPadding: const EdgeInsets.only(left: 150, top: 100),
               theme: AwesomeTheme(
                 bottomActionsBackgroundColor: Colors.transparent,
@@ -145,24 +142,6 @@ class CameraPage extends StatelessWidget {
               },
               availableFilters: awesomePresetFiltersList,
             ),
-          ),
-          // Positioned(
-          //   top: MediaQuery.of(context).padding.top + 10,
-          //   left: 0,
-          //   right: 0,
-          //   child: Center(
-          //     child: Text(
-          //       'Swipe down to close',
-          //       style: TextStyle(color: Colors.white, shadows: [
-          //         Shadow(
-          //           offset: Offset(1.0, 1.0),
-          //           blurRadius: 3.0,
-          //           color: Colors.black.withOpacity(0.8),
-          //         ),
-          //       ]),
-          //     ),
-          //   ),
-          // ),
     );
   }
 }

@@ -21,11 +21,6 @@ class GalleryScreen extends StatelessWidget {
         ),
       ),
       body:   
-            Dismissible(
-              key: const Key('gallery_page'),
-              direction: DismissDirection.horizontal,
-              onDismissed: (_) => context.go('/home'),
-              child:
       SingleChildScrollView(
         primary: false,
         child: 
@@ -41,8 +36,6 @@ class GalleryScreen extends StatelessWidget {
           ],
         ),
       )
-      )
-    
     );
   }
 }

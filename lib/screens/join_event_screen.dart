@@ -13,11 +13,6 @@ class JoinEventScreen extends StatelessWidget {
         backgroundColor: ShadTheme.of(context).colorScheme.background,
       ),
       body: 
-        Dismissible(
-          key: const Key('create_page'),
-          direction: DismissDirection.horizontal,
-          onDismissed: (_) => context.go('/home'),
-          child: 
       Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -43,7 +38,6 @@ class JoinEventScreen extends StatelessWidget {
           ),
         ),
       ),
-      )
     );
   }
 }

@@ -22,7 +22,8 @@ class CameraPage extends StatelessWidget {
               previewPadding: const EdgeInsets.only(left: 150, top: 100),
               theme: AwesomeTheme(
                 bottomActionsBackgroundColor: Colors.transparent,
-                buttonTheme: AwesomeButtonTheme(
+                buttonTheme: 
+                AwesomeButtonTheme(
                   iconSize: 20,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.all(16),
@@ -114,7 +115,7 @@ class CameraPage extends StatelessWidget {
                     fallbackStrategy: QualityFallbackStrategy.lower,
                   ),
                 ),
-                // exifPreferences: ExifPreferences(saveGPSLocation: true),
+                exifPreferences: ExifPreferences(saveGPSLocation: true),
               ),
               sensorConfig: SensorConfig.single(
                 sensor: Sensor.position(SensorPosition.back),

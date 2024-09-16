@@ -14,6 +14,11 @@ class HomePage extends StatelessWidget {
           height: MediaQuery.of(context).padding.top,
         ),
       ),
+      // floatingActionButton:  
+      // FloatingActionButton(
+      //   onPressed: () => context.go('/camera/capture'),
+      //   child: const Icon(LucideIcons.camera),
+      //   ),
       body: SingleChildScrollView(
         primary: false,
         child: Column(

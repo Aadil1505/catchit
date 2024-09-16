@@ -7,7 +7,7 @@ class CreateEventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Event')),
+      appBar: AppBar(),
       body:
         const Center(child: Text('Create Event Screen')),
     );

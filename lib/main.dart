@@ -113,6 +113,14 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         colorScheme: const ShadSlateColorScheme.dark(),
       ),
+      // theme: ThemeData(
+      //   pageTransitionsTheme: PageTransitionsTheme(
+      //     builders: {
+      //       TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+      //       TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      //     }
+      //   )
+      // ),
       routerConfig: _router,
     );
   }

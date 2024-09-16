@@ -1,55 +1,7 @@
-// import 'package:flutter/material.dart';
-// import 'package:go_router/go_router.dart';
-// import 'package:shadcn_ui/shadcn_ui.dart';
-
-// class GalleryScreen extends StatelessWidget {
-//   const GalleryScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Gallery'),
-//         backgroundColor: ShadTheme.of(context).colorScheme.background,
-//       ),
-//       body: 
-//         Dismissible(
-//           key: const Key('create_page'),
-//           direction: DismissDirection.horizontal,
-//           onDismissed: (_) => context.go('/home'),
-//           child: 
-//       GridView.builder(
-//         padding: const EdgeInsets.all(8),
-//         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//           crossAxisCount: 3,
-//           crossAxisSpacing: 8,
-//           mainAxisSpacing: 8,
-//         ),
-//         itemCount: 15, // Example number of items
-//         itemBuilder: (context, index) {
-//           return Container(
-//             decoration: BoxDecoration(
-//               color: ShadTheme.of(context).colorScheme.secondary,
-//               borderRadius: BorderRadius.circular(8),
-//             ),
-//             child: Center(
-//               child: Text(
-//                 'Image ${index + 1}',
-//                 style: ShadTheme.of(context).textTheme.large,
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//         )
-      
-//     );
-//   }
-// }
-
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:go_router/go_router.dart';
 
 const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
 
@@ -60,17 +12,37 @@ class GalleryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          for (final location in locations)
-            LocationListItem(
-              imageUrl: location.imageUrl,
-              name: location.name,
-              country: location.place,
-            ),
-        ],
+    return 
+    Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
+        child: SizedBox(
+          height: MediaQuery.of(context).padding.top,
+        ),
       ),
+      body:   
+            Dismissible(
+              key: const Key('gallery_page'),
+              direction: DismissDirection.horizontal,
+              onDismissed: (_) => context.go('/home'),
+              child:
+      SingleChildScrollView(
+        primary: false,
+        child: 
+        
+        Column(
+          children: [
+            for (final location in locations)
+              LocationListItem(
+                imageUrl: location.imageUrl,
+                name: location.name,
+                country: location.place,
+              ),
+          ],
+        ),
+      )
+      )
+    
     );
   }
 }

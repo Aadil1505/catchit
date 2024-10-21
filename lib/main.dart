@@ -1,15 +1,15 @@
+import 'package:catchit/screens/login/login_page.dart';
+import 'package:catchit/screens/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'screens/root_screen.dart';
-import 'screens/details_screen.dart';
 import 'screens/scaffold_with_nav_bar.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'screens/home_page.dart';
-import 'screens/create_event_screen.dart';
-import 'screens/join_event_screen.dart';
-import 'screens/gallery_screen.dart';
-import 'screens/camera_page.dart';
-import 'screens/camera_launch_page.dart'; // New import
+import 'screens/home/home_page.dart';
+import 'screens/home/create_event_screen.dart';
+import 'screens/home/join_event_screen.dart';
+import 'screens/home/gallery_screen.dart';
+import 'screens/camera/camera_page.dart';
+import 'screens/camera/camera_launch_page.dart'; // New import
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 
   final GoRouter _router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/home',
+    initialLocation: '/login',
     routes: <RouteBase>[
       StatefulShellRoute.indexedStack(
         builder: (BuildContext context, GoRouterState state,
@@ -86,17 +86,34 @@ class MyApp extends StatelessWidget {
               GoRoute(
                 path: '/profile',
                 builder: (BuildContext context, GoRouterState state) =>
-                    const RootScreen(
-                  label: 'Profile',
-                  detailsPath: '/profile/details',
-                ),
-                routes: <RouteBase>[
-                  GoRoute(
-                    path: 'details',
-                    builder: (BuildContext context, GoRouterState state) =>
-                        const DetailsScreen(label: 'Profile Details'),
-                  ),
-                ],
+                    const ProfilePage(),
+                // routes: <RouteBase>[
+                //   GoRoute(
+                //     path: 'detail',
+                //     parentNavigatorKey: _rootNavigatorKey,
+                //     builder: (BuildContext context, GoRouterState state) =>
+                //         const ProfilePage(),
+                //   ),
+                // ],
+              ),
+            ],
+          ),
+
+          // Login branch
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: '/login',
+                builder: (BuildContext context, GoRouterState state) =>
+                    const LoginPage()
+                // routes: <RouteBase>[
+                //   GoRoute(
+                //     path: 'detail',
+                //     parentNavigatorKey: _rootNavigatorKey,
+                //     builder: (BuildContext context, GoRouterState state) =>
+                //         const ProfilePage(),
+                //   ),
+                // ],
               ),
             ],
           ),

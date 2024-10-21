@@ -8,10 +8,7 @@ class JoinEventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Join Event'),
-        backgroundColor: ShadTheme.of(context).colorScheme.background,
-      ),
+      appBar: AppBar(),
       body: 
       Center(
         child: Padding(
